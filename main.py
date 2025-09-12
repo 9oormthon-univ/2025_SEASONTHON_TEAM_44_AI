@@ -5,7 +5,7 @@ from app.chain import chain_with_history
 import asyncio
 
 # FastAPI 앱 초기화
-app = FastAPI(root_path="/chatbot")
+app = FastAPI()
 
 # 요청 본문을 위한 Pydantic 모델 정의
 class ChatRequest(BaseModel):
