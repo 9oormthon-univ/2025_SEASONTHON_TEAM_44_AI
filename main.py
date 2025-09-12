@@ -24,8 +24,8 @@ async def stream_generator(session_id: str, message: str):
             await asyncio.sleep(0.01)
 
 
-@app.post("chatbot/chat")
+@app.post("/chat")
 async def chat(request: ChatRequest):
-    """챗봇과 대화하는 API 엔드포인트"""
+    """사장님이 일반적으로 사용하는 채팅봇"""
     gen = stream_generator(request.session_id, request.message)
     return StreamingResponse(gen, media_type="text/plain")
