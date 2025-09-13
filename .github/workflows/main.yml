@@ -1,0 +1,40 @@
+name: CI/CD with DockerHub
+
+on:
+  push:
+    branches: [ "main" ]   # main 브랜치 push 시 실행
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    # DockerHub 로그인
+    - name: Log in to DockerHub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Docker 이미지 빌드 & 푸시
+    - name: Build and push Docker image
+      run: |
+        IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/myapp
+        docker build -t $IMAGE_NAME:latest .
+        docker push $IMAGE_NAME:latest
+
+    # 서버에 배포
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: 34.63.9.3
+        username: ubuntu
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          docker stop myapp || true
+          docker rm myapp || true
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+          docker run -d --name myapp -p 8000:8000 ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
