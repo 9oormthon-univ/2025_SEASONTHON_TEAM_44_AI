@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Form, UploadFile, File
-from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from app.categorize import categorize_business_logic
@@ -13,16 +12,18 @@ class ChatRequest(BaseModel):
     session_id: str
     message: str
 
-async def stream_generator(session_id: str, message: str):
-    """답변을 스트리밍 방식으로 생성하는 비동기 제너레이터"""
 
-    # LangChain의 비동기 스트리밍 호출
+async def get_full_response(session_id: str, message: str):
+    """
+    LangChain을 사용하여 전체 답변을 생성하고 반환하는 비동기 함수입니다.
+    """
+    # LangChain의 비동기 invoke 메서드를 호출하기 위해 await를 사용합니다.
     config = {"configurable": {"session_id": session_id}}
-    async for chunk in chain_with_history.invoke({"input": message}, config=config):
-        if hasattr(chunk, 'content'):
-            return chunk.content
-    return None
+    result = await chain_with_history.ainvoke({"input": message}, config=config)
 
+    # LangChain 결과에서 'content' 필드를 추출하여 반환합니다.
+    # 만약 결과 객체의 구조가 다르다면 이 부분을 수정해야 합니다.
+    return result.content
 
 # --- API 모델 정의 ---
 class CategorizationResponse(BaseModel):
@@ -30,10 +31,14 @@ class CategorizationResponse(BaseModel):
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
-    """사장님이 일반적으로 사용하는 채팅봇"""
-    gen = stream_generator(request.session_id, request.message)
-    return StreamingResponse(gen, media_type="text/plain")
+    """
+    일반적인 채팅봇을 위한 엔드포인트입니다.
+    """
+    # LangChain을 사용하여 전체 답변을 가져오는 비동기 함수를 호출합니다.
+    response_content = await get_full_response(request.session_id, request.message)
 
+    # FastAPI는 딕셔너리 객체를 자동으로 JSON 응답으로 변환합니다.
+    return {"response": response_content}
 
 @app.post("/categorize", response_model=CategorizationResponse)
 async def categorize_business_controller(
