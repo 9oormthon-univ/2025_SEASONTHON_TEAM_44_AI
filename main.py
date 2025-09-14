@@ -21,8 +21,6 @@ async def get_full_response(session_id: str, message: str):
     config = {"configurable": {"session_id": session_id}}
     result = await chain_with_history.ainvoke({"input": message}, config=config)
 
-    # LangChain 결과에서 'content' 필드를 추출하여 반환합니다.
-    # 만약 결과 객체의 구조가 다르다면 이 부분을 수정해야 합니다.
     return result.content
 
 # --- API 모델 정의 ---
@@ -50,24 +48,19 @@ async def categorize_business_controller(
     """
     HTTP 요청을 받아 서비스 계층으로 데이터를 전달하고, 그 결과를 응답으로 반환합니다.
     """
-    try:
-        # 1. 업로드된 파일 데이터를 bytes로 변환
-        main_image_data = await main_image.read()
-        menu_image_data = await menu_image.read()
+    # 1. 업로드된 파일 데이터를 bytes로 변환
+    main_image_data = await main_image.read()
+    menu_image_data = await menu_image.read()
 
-        # 2. 서비스 계층의 핵심 로직 함수 호출
-        category = await categorize_business_logic(
-            store_name=store_name,
-            description=description,
-            main_image_data=main_image_data,
-            main_image_content_type=main_image.content_type,
-            menu_image_data=menu_image_data,
-            menu_image_content_type=menu_image.content_type
-        )
+    # 2. 서비스 계층의 핵심 로직 함수 호출
+    category = await categorize_business_logic(
+        store_name=store_name,
+        description=description,
+        main_image_data=main_image_data,
+        main_image_content_type=main_image.content_type,
+        menu_image_data=menu_image_data,
+        menu_image_content_type=menu_image.content_type
+    )
 
-        return {"category": category}
+    return {"category": category}
 
-    except Exception as e:
-        # 서비스 계층에서 발생한 예외를 여기서 잡아 HTTP 에러로 변환
-        from fastapi import HTTPException
-        raise HTTPException(status_code=500, detail=f"업종 분류 중 서버 오류 발생: {str(e)}")
