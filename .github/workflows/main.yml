@@ -37,7 +37,8 @@ jobs:
           docker rm 9oorm-ai || true
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/9oorm-ai:latest
           docker run -d --name 9oorm-ai -p 8000:8000 \
+            --network 9oorm-network \
             -e GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
-            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+            -e MONGO_URI=${{ secrets.MONGO_URI }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/9oorm-ai:latest
 
