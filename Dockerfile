@@ -15,5 +15,4 @@ COPY . .
 EXPOSE 8000
 
 # 6. gunicorn으로 애플리케이션 실행 (uvicorn 워커 사용)
-# 워커의 수는 보통 (CPU 코어 수 * 2) + 1 로 설정하는 것을 권장합니다.
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "main:app", "--workers", "1", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "main:app", "--workers", "2", "--bind", "0.0.0.0:8000", "--timeout", "120"]
