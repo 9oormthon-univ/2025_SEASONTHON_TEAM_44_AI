@@ -41,4 +41,3 @@ jobs:
             -e GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
             -e MONGO_URI=${{ secrets.MONGO_URI }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/9oorm-ai:latest
-
