@@ -37,4 +37,9 @@ jobs:
           docker stop myapp || true
           docker rm myapp || true
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
-          docker run -d --name myapp -p 8000:8000 ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+          script: |
+          # ... (이전 docker 명령어들)
+          docker run -d --name myapp -p 8000:8000 \
+            -e GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
+            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
+            ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
