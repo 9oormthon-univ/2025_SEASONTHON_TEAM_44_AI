@@ -36,7 +36,6 @@ jobs:
           docker stop myapp || true
           docker rm myapp || true
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
-          script: |
           docker run -d --name myapp -p 8000:8000 \
             -e GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
