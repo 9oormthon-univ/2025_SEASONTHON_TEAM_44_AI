@@ -20,7 +20,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/9oorm-aI
+        IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/9oorm-ai
         docker build -t $IMAGE_NAME:latest .
         docker push $IMAGE_NAME:latest
 
@@ -33,10 +33,10 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         passphrase: ${{ secrets.SERVER_SSH_PASSPHRASE }}
         script: |
-          docker stop 9oormAI || true
-          docker rm 9oormAI || true
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/9oormAI:latest
-          docker run -d --name 9oormAI -p 8000:8000 \
+          docker stop 9oorm-ai || true
+          docker rm 9oorm-ai || true
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/9oorm-ai:latest
+          docker run -d --name 9oorm-ai -p 8000:8000 \
             -e GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-            ${{ secrets.DOCKERHUB_USERNAME }}/9oormAI:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/9oorm-ai:latest
