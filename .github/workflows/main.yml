@@ -40,3 +40,4 @@ jobs:
             -e GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }} \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/9oorm-ai:latest
+
