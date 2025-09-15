@@ -18,12 +18,11 @@ executing==2.2.1
 fastapi==0.116.1
 fastjsonschema==2.21.2
 filetype==1.2.0
-google-ai-generativelanguage==0.6.15
 google-api-core==2.25.1
 google-api-python-client==2.181.0
 google-auth==2.40.3
 google-auth-httplib2==0.2.0
-google-generativeai==0.8.5
+google-generativeai
 googleapis-common-protos==1.70.0
 grpcio==1.74.0
 grpcio-status==1.71.2
@@ -44,7 +43,7 @@ jupyter_core==5.8.1
 jupyterlab_pygments==0.3.0
 langchain==0.3.27
 langchain-core==0.3.75
-langchain-google-genai==2.1.10
+langchain-google-genai
 langchain-mongodb==0.7.0
 langchain-text-splitters==0.3.11
 langsmith==0.4.27
