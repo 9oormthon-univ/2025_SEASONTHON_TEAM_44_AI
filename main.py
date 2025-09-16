@@ -7,6 +7,19 @@ from app.chain import chain_with_history
 # FastAPI 앱 초기화
 app = FastAPI(root_path="/chatbot")
 
+origins = [
+    "http://localhost:5173",
+    "https://ceo-dasion.vercel.app"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,          # 허용할 Origin 리스트
+    allow_credentials=True,         # 쿠키 등 인증정보 허용 여부
+    allow_methods=["*"],            # 허용할 HTTP 메서드
+    allow_headers=["*"],            # 허용할 HTTP 헤더
+)
+
 # 요청 본문을 위한 Pydantic 모델 정의
 class ChatRequest(BaseModel):
     session_id: str
