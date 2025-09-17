@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Form, UploadFile, File
 from pydantic import BaseModel
+from starlette.middleware.cors import CORSMiddleware
 
 from app.categorize import categorize_business_logic
 from app.chain import chain_with_history
