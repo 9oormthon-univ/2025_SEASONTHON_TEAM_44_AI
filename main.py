@@ -77,4 +77,3 @@ async def categorize_business_controller(
     )
 
     return {"category": category}
-
