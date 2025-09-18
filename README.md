@@ -25,6 +25,19 @@
 | **Database** | <img src="https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white" />                         |
 | **DevOps** | <img src="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" /> <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions&logoColor=white" /> |
 
+## 🗂️ 프로젝트 구조
+/
+├── app/ # AI 관련 코드 모듈 (모델, 서비스 로직)
+├── main.py # 실행 진입점 (API 서버 구동)
+├── requirements.txt # Python 의존성 패키지
+├── test_main.http # API 테스트용 HTTP 요청 샘플
+├── Dockerfile # 컨테이너 빌드 설정
+├── .dockerignore # Docker 빌드시 제외할 파일
+└── .github/workflows/ # CI/CD 설정 (GitHub Actions)
+
+
+
+
 ## 🚀 시작하기
 
 ### 1. 환경 변수 설정
@@ -46,3 +59,11 @@ MONGO_DB_NAME="9oorm"
 
 # (선택) LangChain에서 사용할 MongoDB 컬렉션 이름
 MONGO_COLLECTION="chat_histories"
+
+```
+## ✨ 특징
+- 독립적인 AI 서비스 모듈 → 백엔드와 분리된 구조  
+- 컨테이너화(Docker)로 배포 환경에 구애받지 않음  
+- API 엔드포인트 테스트용 `.http` 파일 제공  
+
+---
