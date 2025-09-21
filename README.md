@@ -1,3 +1,6 @@
+<img width="2048" height="1152" alt="image" src="https://github.com/user-attachments/assets/139de1e6-0e32-4371-8c2e-789099d4d245" />
+
+
 # 🤖 AI 기반 업종 추천 및 챗봇 서비스 (TEAM 44)
 
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python)](https://www.python.org/)
